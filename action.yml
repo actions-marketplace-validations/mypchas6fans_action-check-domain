@@ -11,6 +11,7 @@ inputs:
   checkDomain:
     description: 'Check domain valid time or not'
     required: false
+    default: false
 
 outputs:
   ssl-expire-date:
