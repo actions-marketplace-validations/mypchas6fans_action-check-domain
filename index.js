@@ -40,6 +40,9 @@ try {
                 core.setOutput("paid-till-days-left", Dates.countDays(date));
             })
             .catch(core.error);
+    } else {
+        core.setOutput("paid-till-date", "");
+        core.setOutput("paid-till-days-left", "");
     }
 } catch (error) {
     core.setFailed(error.message);
