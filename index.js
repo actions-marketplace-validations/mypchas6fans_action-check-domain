@@ -3,13 +3,6 @@ const Dates = require('./utils/dates');
 const CheckCertificate = require('./tasks/check-certificate');
 const CheckPaidTillDate = require('./tasks/check-paid-till-date');
 
-checkDomain = true;
-
-try {
-    checkDomain = core.getInput('checkDomain');
-} catch (error) {
-    checkDomain = true;
-}
 
 try {
     /**
@@ -17,6 +10,7 @@ try {
      * @type {string}
      */
     const URL = core.getInput('url');
+    const checkDomain = core.getInput('checkDomain');
 
     /**
      * Check SSL certificate
