@@ -3,6 +3,14 @@ const Dates = require('./utils/dates');
 const CheckCertificate = require('./tasks/check-certificate');
 const CheckPaidTillDate = require('./tasks/check-paid-till-date');
 
+checkDomain = true;
+
+try {
+    checkDomain = core.getInput('checkDomain');
+} catch (error) {
+    checkDomain = true;
+}
+
 try {
     /**
      * Site domain to be checked
@@ -31,12 +39,14 @@ try {
     /**
      * Check domain's registry expiry date
      */
-    CheckPaidTillDate(URL)
-        .then(date => {
-            core.setOutput("paid-till-date", date.toString());
-            core.setOutput("paid-till-days-left", Dates.countDays(date));
-        })
-        .catch(core.error);
+    if (checkDomain) {
+        CheckPaidTillDate(URL)
+            .then(date => {
+                core.setOutput("paid-till-date", date.toString());
+                core.setOutput("paid-till-days-left", Dates.countDays(date));
+            })
+            .catch(core.error);
+    }
 } catch (error) {
     core.setFailed(error.message);
 }
