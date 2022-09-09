@@ -1,4 +1,4 @@
-# Domain and SSL cert watcher
+# SSL cert watcher(And domain if needed)
 
 Watch SSL certs and registry date expiring for your domains.
 
@@ -9,6 +9,11 @@ Watch SSL certs and registry date expiring for your domains.
 ### `url`
 
 Site domain to be checked (with protocol).
+
+### `checkDomain`
+
+Check domain valid time or not
+Boolean, Optional, default to true
 
 ## Outputs
 
