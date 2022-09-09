@@ -13,6 +13,7 @@ Site domain to be checked (with protocol).
 ### `checkDomain`
 
 Check domain valid time or not
+
 Boolean, Optional, default to true
 
 ## Outputs
