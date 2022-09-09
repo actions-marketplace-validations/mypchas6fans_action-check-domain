@@ -16,7 +16,7 @@ try {
      */
     CheckCertificate(URL)
         .then(date => {
-            core.setOutput("ssl-expire-date", date.toString());
+            core.setOutput("ssl-expire-date", date.format("yyyy-MM-dd-hh-mm-ss").toString());
             core.setOutput("ssl-expire-days-left", Dates.countDays(date));
         })
         .catch(error => {

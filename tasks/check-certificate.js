@@ -12,7 +12,7 @@ function checkCertificate(domain) {
 
             if (!certificate.valid_to) reject(new Error(`Unable to get SSL-certificate expiration date for domain ${domain}`));
 
-            resolve(new Date(certificate.valid_to).format("yyyy-MM-dd-hh-mm-ss"));
+            resolve(new Date(certificate.valid_to));
         })
             .on('error', reject);
     });
