@@ -8,10 +8,12 @@ inputs:
   url:
     description: 'Site domain to be checked (with protocol)'
     required: true
+    type: string
   checkDomain:
     description: 'Check domain valid time or not'
     required: false
     default: false
+    type: boolean
 
 outputs:
   ssl-expire-date:
