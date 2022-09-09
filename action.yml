@@ -8,12 +8,6 @@ inputs:
   url:
     description: 'Site domain to be checked (with protocol)'
     required: true
-    type: string
-  checkDomain:
-    description: 'Check domain valid time or not'
-    required: false
-    default: false
-    type: boolean
 
 outputs:
   ssl-expire-date:
@@ -21,12 +15,6 @@ outputs:
 
   ssl-expire-days-left:
     description: 'SSL certificate expire number of days left'
-
-  paid-till-date:
-    description: 'Registry Expiry Date'
-
-  paid-till-days-left:
-    description: 'Registry Expiry number of days left'
 
 runs:
   using: 'node12'

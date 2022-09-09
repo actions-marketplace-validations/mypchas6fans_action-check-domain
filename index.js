@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const Dates = require('./utils/dates');
 const CheckCertificate = require('./tasks/check-certificate');
-const CheckPaidTillDate = require('./tasks/check-paid-till-date');
+// const CheckPaidTillDate = require('./tasks/check-paid-till-date');
 
 
 try {
@@ -10,7 +10,6 @@ try {
      * @type {string}
      */
     const URL = core.getInput('url');
-    const checkDomain = core.getInput('checkDomain');
 
     /**
      * Check SSL certificate
@@ -30,20 +29,6 @@ try {
         })
         .catch(core.error);
 
-    /**
-     * Check domain's registry expiry date
-     */
-    if (checkDomain) {
-        CheckPaidTillDate(URL)
-            .then(date => {
-                core.setOutput("paid-till-date", date.toString());
-                core.setOutput("paid-till-days-left", Dates.countDays(date));
-            })
-            .catch(core.error);
-    } else {
-        core.setOutput("paid-till-date", "");
-        core.setOutput("paid-till-days-left", "");
-    }
 } catch (error) {
     core.setFailed(error.message);
 }

@@ -28,57 +28,6 @@ module.exports = checkCertificate;
 
 /***/ }),
 
-/***/ 31:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-const parser = __nccwpck_require__(872);
-const whois = __nccwpck_require__(956);
-
-/**
- * Keys in whois response for getting 'paid till' date
- * @type {string[]}
- */
-const KEYS = [
-    'Registrar Registration Expiration Date',
-    'Registry Expiry Date',
-    'Expiration Time',
-    'paid-till'
-];
-
-/**
- * Get domain's registry expiry date
- * @param domain
- * @returns {Promise<Date>}
- */
-function getDatePaidTill(domain) {
-    /** Get domain from url */
-    domain = (new URL(domain)).host;
-
-    return new Promise((resolve, reject) => {
-        whois.lookup(domain, function(err, data) {
-            if (err) reject(err);
-
-            const parsedData = parser.parseWhoIsData(data);
-            let paidTillDate;
-
-            for (const [key, param] of Object.entries(parsedData)) {
-                if (KEYS.includes(param['attribute'].trim())) {
-                    paidTillDate = new Date(param.value);
-                    break;
-                }
-            }
-
-            if (!paidTillDate) reject(new Error(`No registry expiry date was found for domain ${domain}`));
-
-            resolve(paidTillDate);
-        });
-    });
-}
-
-module.exports = getDatePaidTill;
-
-/***/ }),
-
 /***/ 905:
 /***/ ((module) => {
 
@@ -122,22 +71,6 @@ module.exports = Dates;
 /***/ ((module) => {
 
 module.exports = eval("require")("@actions/core");
-
-
-/***/ }),
-
-/***/ 872:
-/***/ ((module) => {
-
-module.exports = eval("require")("parse-whois");
-
-
-/***/ }),
-
-/***/ 956:
-/***/ ((module) => {
-
-module.exports = eval("require")("whois");
 
 
 /***/ }),
@@ -194,7 +127,7 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(61);
 const Dates = __nccwpck_require__(905);
 const CheckCertificate = __nccwpck_require__(671);
-const CheckPaidTillDate = __nccwpck_require__(31);
+// const CheckPaidTillDate = require('./tasks/check-paid-till-date');
 
 
 try {
@@ -203,7 +136,6 @@ try {
      * @type {string}
      */
     const URL = core.getInput('url');
-    const checkDomain = core.getInput('checkDomain');
 
     /**
      * Check SSL certificate
@@ -223,20 +155,6 @@ try {
         })
         .catch(core.error);
 
-    /**
-     * Check domain's registry expiry date
-     */
-    if (checkDomain) {
-        CheckPaidTillDate(URL)
-            .then(date => {
-                core.setOutput("paid-till-date", date.toString());
-                core.setOutput("paid-till-days-left", Dates.countDays(date));
-            })
-            .catch(core.error);
-    } else {
-        core.setOutput("paid-till-date", "");
-        core.setOutput("paid-till-days-left", "");
-    }
 } catch (error) {
     core.setFailed(error.message);
 }
