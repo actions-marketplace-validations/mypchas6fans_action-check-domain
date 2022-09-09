@@ -1,6 +1,6 @@
-# SSL cert watcher(And domain if needed)
+# SSL cert watcher
 
-Watch SSL certs and registry date expiring for your domains.
+Watch SSL certs date expiring for your domains.
 
 ![banner](./assets/banner.png)
 
@@ -9,12 +9,6 @@ Watch SSL certs and registry date expiring for your domains.
 ### `url`
 
 Site domain to be checked (with protocol).
-
-### `checkDomain`
-
-Check domain valid time or not
-
-Boolean, Optional, default to true
 
 ## Outputs
 
@@ -25,14 +19,6 @@ SSL certificate expire date
 ### `ssl-expire-days-left`
 
 SSL certificate expire number of days left
-
-### `paid-till-date`
-
-Registry Expiry Date
-
-### `paid-till-days-left`
-
-Registry Expiry number of days left
 
 ## Example usage
 
@@ -77,14 +63,6 @@ jobs:
         uses: codex-team/action-check-domain@v1
         with:
           url: ${{ matrix.domain }}
-
-      - name: Create an issue if paid till number is below limit 
-        if: ${{ steps.check-domain.outputs.paid-till-days-left && steps.check-domain.outputs.paid-till-days-left < 10 }}
-        uses: rishabhgupta/git-action-issue@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: ⚠️ ${{ matrix.domain }} — registry expiries in ${{ steps.check-domain.outputs.paid-till-days-left }} days
-          body: 'Paid till: `${{ steps.check-domain.outputs.paid-till-date }}`'
 
       - name: Create an issue if SSL lifespan days number is below limit 
         if: ${{ steps.check-domain.outputs.ssl-expire-days-left && steps.check-domain.outputs.ssl-expire-days-left < 10 }}
