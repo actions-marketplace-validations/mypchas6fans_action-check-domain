@@ -10,17 +10,17 @@ try {
      * @type {string}
      */
     var list = core.getInput('url').split(' ');
-    for(url in list) {
+    for(index in list) {
         /**
          * Check SSL certificate
          */
-        CheckCertificate(url)
+        CheckCertificate(list[index])
             .then(date => {
-                console.log(url + "\t\t" + date.toISOString() + "\t\t" + Dates.countDays(date));
+                console.log(list[index] + "\t\t" + date.toISOString() + "\t\t" + Dates.countDays(date));
             })
             .catch(error => {
                 if (error.code === 'CERT_HAS_EXPIRED') {
-                    console.log(url + "\t\tINVALID\t\t-1");
+                    console.log(list[index] + "\t\tINVALID\t\t-1");
                 }
 
                 throw error;
