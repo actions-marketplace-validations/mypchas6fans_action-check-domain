@@ -11,11 +11,11 @@ try {
      */
     var list = core.getInput('url').split('\n');
     
-    for(URL in list) {
+    for(index in list) {
         /**
          * Check SSL certificate
          */
-        CheckCertificate(URL)
+        CheckCertificate(list[index])
             .then(date => {
                 core.setOutput("ssl-expire-date", date.toISOString());
                 core.setOutput("ssl-expire-days-left", Dates.countDays(date));
