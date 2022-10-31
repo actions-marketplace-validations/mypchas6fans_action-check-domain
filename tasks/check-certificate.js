@@ -8,7 +8,7 @@ const https = require('https');
 function checkCertificate(domain) {
     return new Promise((resolve, reject) => {
         https.get(domain, {agent: false}, response => {
-            const certificate = response.connection.getPeerCertificate();
+            const certificate = response.socket.getPeerCertificate();
 
             if (!certificate.valid_to) reject(new Error(`Unable to get SSL-certificate expiration date for domain ${domain}`));
 

@@ -12,8 +12,9 @@ jobs:
     steps:
       - name: Check domain SSL and registry expire date
         id: check-domain
-        uses: mypchas6fans/action-check-domain@0.19
+        uses: mypchas6fans/action-check-domain@0.20
         with:
           url: >
             https://www.google.com
             https://www.amazon.com
+            https://www.apple.com
