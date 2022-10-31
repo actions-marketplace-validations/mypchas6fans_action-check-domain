@@ -6,14 +6,15 @@ const CheckCertificate = require('./tasks/check-certificate');
 var list = core.getInput('url').split(' ');
 for (index in list) {
     url = list[index];
+    console.log(url);
     try {
         CheckCertificate(url)
             .then(date => {
-                console.log(url + "\t\t" + date.toISOString() + "\t\t" + Dates.countDays(date));
+                console.log("\t\t" + date.toISOString() + "\t\t" + Dates.countDays(date));
             })
             .catch(error => {
                 if (error.code === 'CERT_HAS_EXPIRED') {
-                    console.log(url + "\t\tINVALID\t\t-1");
+                    console.log("\t\tINVALID\t\t-1");
                 }
 
                 throw error;
