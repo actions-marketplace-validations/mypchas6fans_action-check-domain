@@ -1,0 +1,23 @@
+name: test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on:
+      - ubuntu-latest
+    name: Check domain
+
+    steps:
+      - name: Check domain SSL and registry expire date
+        id: check-domain
+        uses: mypchas6fans/action-check-domain@0.12
+        with:
+          url: |
+            https://www.google.com
+       
+      - name: output
+        run: |
+          echo ${{ steps.check-domain.outputs.ssl-expire-date }}
+          echo ${{ steps.check-domain.outputs.ssl-expire-days-left }}
