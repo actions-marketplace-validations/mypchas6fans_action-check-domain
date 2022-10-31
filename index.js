@@ -9,25 +9,27 @@ try {
      * Site domain to be checked
      * @type {string}
      */
-    const URL = core.getInput('url');
+    var list = core.getInput('url').split("\n");
+    
+    for(URL in list) {
+        /**
+         * Check SSL certificate
+         */
+        CheckCertificate(URL)
+            .then(date => {
+                core.setOutput("ssl-expire-date", date.toISOString());
+                core.setOutput("ssl-expire-days-left", Dates.countDays(date));
+            })
+            .catch(error => {
+                if (error.code === 'CERT_HAS_EXPIRED') {
+                    core.setOutput("ssl-expire-date", "INVALID");
+                    core.setOutput("ssl-expire-days-left", -1);
+                }
 
-    /**
-     * Check SSL certificate
-     */
-    CheckCertificate(URL)
-        .then(date => {
-            core.setOutput("ssl-expire-date", date.toISOString());
-            core.setOutput("ssl-expire-days-left", Dates.countDays(date));
-        })
-        .catch(error => {
-            if (error.code === 'CERT_HAS_EXPIRED') {
-                core.setOutput("ssl-expire-date", "INVALID");
-                core.setOutput("ssl-expire-days-left", -1);
-            }
-
-            throw error;
-        })
-        .catch(core.error);
+                throw error;
+            })
+            .catch(core.error);
+    }
 
 } catch (error) {
     core.setFailed(error.message);
