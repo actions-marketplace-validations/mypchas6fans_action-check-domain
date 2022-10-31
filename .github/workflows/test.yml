@@ -16,6 +16,7 @@ jobs:
         with:
           url: |
             https://www.google.com
+            https://www.amazon.com
        
       - name: output
         run: |
