@@ -9,12 +9,14 @@ try {
      * Site domain to be checked
      * @type {string}
      */
+    console.log(core.getInput('url'));
     var list = core.getInput('url').split(' ');
-    for(index in list) {
+    console.log(list);
+    for(url in list) {
         /**
          * Check SSL certificate
          */
-        CheckCertificate(list[index])
+        CheckCertificate(url)
             .then(date => {
                 console.log(url + "\t\t" + date.toISOString() + "\t\t" + Dates.countDays(date));
             })
