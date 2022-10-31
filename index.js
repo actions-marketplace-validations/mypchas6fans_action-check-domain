@@ -9,9 +9,7 @@ try {
      * Site domain to be checked
      * @type {string}
      */
-    console.log(core.getInput('url'));
     var list = core.getInput('url').split(' ');
-    console.log(list);
     for(url in list) {
         /**
          * Check SSL certificate
