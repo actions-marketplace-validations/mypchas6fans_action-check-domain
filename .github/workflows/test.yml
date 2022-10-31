@@ -14,7 +14,7 @@ jobs:
         id: check-domain
         uses: mypchas6fans/action-check-domain@0.13
         with:
-          url: |
+          url: >
             https://www.google.com
             https://www.amazon.com
        
