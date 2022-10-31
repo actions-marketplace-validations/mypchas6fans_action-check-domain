@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Check domain SSL and registry expire date
         id: check-domain
-        uses: mypchas6fans/action-check-domain@0.21
+        uses: mypchas6fans/action-check-domain@0.22
         with:
           url: >
             https://www.google.com
